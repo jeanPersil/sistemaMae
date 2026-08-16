@@ -1,0 +1,19 @@
+{
+  "name": "sistemamae",
+  "version": "1.0.0",
+  "description": "sistema feito para auxiliar minha mãe no trabalho dela ",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "jeanPersil",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
