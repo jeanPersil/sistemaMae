@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { UserController } from "./userController.js";
 import { authMiddleware } from "../../middleware/authValidate.js";
+import userController from "./instancias.js";
 
 const userRouter = Router();
-const userController = new UserController();
 
 userRouter.post("/auth/signup", userController.signUp);
 userRouter.post("/auth/login", userController.login);

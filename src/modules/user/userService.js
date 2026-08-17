@@ -1,16 +1,16 @@
 import jwt from "jsonwebtoken";
-import { UserRepository } from "../../banco/repository/userRepository.js";
 import bcrypt from "bcrypt";
 import { User } from "./entity/userEntity.js";
 
-const userRepo = new UserRepository();
-
 export class UserService {
+  constructor(UserRepository) {
+    this.userRepo = UserRepository;
+  }
   async SignUp({ name, email, password, role }) {
     const saltRounds = await bcrypt.genSalt(10);
     const encryptedPassword = await bcrypt.hash(password, saltRounds);
 
-    const userData = await userRepo.SignUp({
+    const userData = await this.userRepo.SignUp({
       email,
       name,
       password: encryptedPassword,
@@ -21,9 +21,8 @@ export class UserService {
   }
 
   async login({ email, password }) {
-    const userData = await userRepo.login(email);
+    const userData = await this.userRepo.login(email);
 
-    // Verificar se usuário existe
     if (!userData) {
       throw new Error("Email ou senha incorreto");
     }
@@ -36,7 +35,6 @@ export class UserService {
 
     const user = new User(userData);
 
-    // Validar PRIVATE_KEY
     if (!process.env.PRIVATE_KEY) {
       throw new Error("PRIVATE_KEY não configurada");
     }

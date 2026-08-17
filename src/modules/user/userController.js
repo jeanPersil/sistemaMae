@@ -1,8 +1,3 @@
-import { UserService } from "./userService.js";
-
-const userServ = new UserService();
-
-// Validar formato de email
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -13,6 +8,10 @@ const isValidPassword = (password) => {
 };
 
 export class UserController {
+  constructor(UserService) {
+    this.userServ = UserService;
+  }
+
   signUp = async (req, res) => {
     try {
       const { name, email, password, role } = req.body;
@@ -34,7 +33,7 @@ export class UserController {
         });
       }
 
-      const data = await userServ.SignUp({ email, name, password, role });
+      const data = await this.userServ.SignUp({ email, name, password, role });
 
       return res.status(201).json({
         message: "Usuário criado com sucesso",
@@ -61,7 +60,7 @@ export class UserController {
         return res.status(400).json({ error: "Email inválido" });
       }
 
-      const { token, usuario } = await userServ.login({ email, password });
+      const { token, usuario } = await this.userServ.login({ email, password });
 
       res.cookie("token", token, {
         httpOnly: true,
