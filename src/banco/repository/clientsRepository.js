@@ -38,6 +38,8 @@ export class ClientsRepository extends IClientsRepository {
   }
 
   async findById(id) {
+    console.log("FOI ISSO QUE CHEGOU AQUI NESSA POHA: " + id);
+
     const { data, error } = await supabase
       .from("clientes")
       .select("*")
@@ -45,7 +47,7 @@ export class ClientsRepository extends IClientsRepository {
       .single();
 
     if (error) {
-      if (error.code === "PGRST116") return null; // Cliente não encontrado
+      if (error.code === "PGRST116") return null;
       throw new Error(`Erro ao buscar cliente: ${error.message}`);
     }
 
@@ -53,7 +55,7 @@ export class ClientsRepository extends IClientsRepository {
     return dadosMapeados;
   }
 
-  async update(id, { name, phone, email, neighborhood, fk_city, notes }) {
+  async update({ id, name, phone, email, neighborhood, fk_city, notes }) {
     const { data, error } = await supabase
       .from("clientes")
       .update({
@@ -95,10 +97,8 @@ export class ClientsRepository extends IClientsRepository {
       this.mapToEntityFormat(cliente),
     );
 
-    console.log("Dados do repositorio" + data);
-
     return {
-      clientes: dadosMapeados,
+      clients: dadosMapeados,
       meta: {
         totalItems: count,
         currentPage: Number(page),

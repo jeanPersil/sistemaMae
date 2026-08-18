@@ -35,16 +35,23 @@ export class ClientEntity {
     return this.birthday.getMonth() + 1 === mesAtual;
   }
 
-  atualizarDados({ name, phone, email, neighborhood, fk_city, notes }) {
+  atualizarDados({
+    name,
+    phone,
+    email,
+    neighborhood,
+    fk_city,
+    notes,
+    birthday,
+  }) {
     if (name) this.name = name;
     if (phone) this.phone = phone;
     if (email) this.email = email;
     if (neighborhood) this.neighborhood = neighborhood;
     if (fk_city) this.fk_city = fk_city;
+    if (birthday) this.birthday = birthday;
 
     if (notes !== undefined) this.notes = notes;
-
-    this.atualizado_em = new Date();
   }
 
   adicionarObservacao(novaObservacao) {

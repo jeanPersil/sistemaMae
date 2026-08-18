@@ -35,7 +35,7 @@ export class UserRepository extends IuserRepository {
 
     if (error) {
       if (error.code === "PGRST116") {
-        return null; // Usuário não encontrado
+        return null;
       }
       throw new Error(`Erro ao buscar usuário: ${error.message}`);
     }

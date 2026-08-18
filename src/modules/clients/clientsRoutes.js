@@ -8,6 +8,9 @@ const clientController = new ClientController();
 const cliRouter = Router();
 
 cliRouter.post("/", clientController.create);
+cliRouter.put("/:userId", clientController.update);
 cliRouter.get("/", clientController.findAll);
+cliRouter.get("/:userId", clientController.findById);
+cliRouter.delete("/:userId", clientController.delete);
 
 export default cliRouter;
