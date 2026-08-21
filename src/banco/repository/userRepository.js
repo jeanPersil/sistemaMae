@@ -42,8 +42,4 @@ export class UserRepository extends IuserRepository {
 
     return data;
   }
-
-  async logout() {
-    return true;
-  }
 }

@@ -38,8 +38,6 @@ export class ClientsRepository extends IClientsRepository {
   }
 
   async findById(id) {
-    console.log("FOI ISSO QUE CHEGOU AQUI NESSA POHA: " + id);
-
     const { data, error } = await supabase
       .from("clientes")
       .select("*")

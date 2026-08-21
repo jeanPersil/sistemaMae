@@ -1,13 +1,14 @@
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 export function authMiddleware(req, res, next) {
   const token = req.cookies.token;
 
   if (!token) {
-    return res.status(401).json({
-      message: "Acesso negado. Token não fornecido.",
-    });
+    return res.redirect("/");
   }
+  console.log("Token que chegou aqui: ")
+  console.log(token);
 
   try {
     const payload = jwt.verify(token, process.env.PRIVATE_KEY);

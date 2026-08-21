@@ -1,10 +1,8 @@
+import { AppError } from "../../erro.js";
+
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
-};
-
-const isValidPassword = (password) => {
-  return password && password.length >= 6;
 };
 
 export class UserController {
@@ -12,88 +10,38 @@ export class UserController {
     this.userServ = UserService;
   }
 
-  signUp = async (req, res) => {
-    try {
-      const { name, email, password, role } = req.body;
-
-      // Validar dados de entrada
-      if (!name || !email || !password || !role) {
-        return res.status(400).json({
-          error: "Nome, email, senha e role são obrigatórios",
-        });
-      }
-
-      if (!isValidEmail(email)) {
-        return res.status(400).json({ error: "Email inválido" });
-      }
-
-      if (!isValidPassword(password)) {
-        return res.status(400).json({
-          error: "Senha deve ter no mínimo 6 caracteres",
-        });
-      }
-
-      const data = await this.userServ.SignUp({ email, name, password, role });
-
-      return res.status(201).json({
-        message: "Usuário criado com sucesso",
-        user: data,
-      });
-    } catch (error) {
-      return res.status(500).json({
-        error: error.message || "Erro ao criar usuário",
-      });
-    }
-  };
-
   login = async (req, res) => {
-    try {
-      const { email, password } = req.body;
+    const { email, password } = req.body;
 
-      if (!email || !password) {
-        return res.status(400).json({
-          error: "Email e senha são obrigatórios",
-        });
-      }
-
-      if (!isValidEmail(email)) {
-        return res.status(400).json({ error: "Email inválido" });
-      }
-
-      const { token, usuario } = await this.userServ.login({ email, password });
-
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      });
-
-      return res.status(200).json({
-        message: "Login realizado com sucesso",
-        user: usuario,
-      });
-    } catch (error) {
-      return res.status(401).json({
-        error: error.message || "Erro ao fazer login",
+    if (!email || !password) {
+      throw new AppError({
+        message: "Email e senha são obrigatorios",
+        statusCode: 400,
       });
     }
+
+    if (!isValidEmail(email)) {
+      throw new AppError({ message: "Email invalido", statusCode: 400 });
+    }
+
+    const { token, usuario } = await this.userServ.login({ email, password });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    return res.status(200).json(usuario);
   };
 
   logout = async (req, res) => {
-    try {
-      res.clearCookie("token", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      });
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
 
-      return res.status(200).json({
-        message: "Logout realizado com sucesso",
-      });
-    } catch (error) {
-      return res.status(500).json({
-        error: "Erro ao fazer logout",
-      });
-    }
+    return res.status(200);
   };
 }
