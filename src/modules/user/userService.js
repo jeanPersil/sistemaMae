@@ -13,7 +13,10 @@ export class UserService {
     const userData = await this.userRepo.login(email);
 
     if (!userData) {
-      throw new Error("Email ou senha incorreto");
+      throw new AppError({
+        message: "Usuario ou senha incorretos",
+        statusCode: 401,
+      });
     }
 
     const match = await bcrypt.compare(password, userData.senha);

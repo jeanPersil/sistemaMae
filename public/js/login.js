@@ -1,4 +1,4 @@
-import { showError } from "/assets/alert.js";
+import { UI } from "/js/assets/ui-components.js";
 
 const formLogin = document.getElementById("formLogin");
 
@@ -32,7 +32,7 @@ formLogin.addEventListener("submit", async (event) => {
     if (!response.ok) {
       formLogin.insertAdjacentHTML(
         "beforeend",
-        showError({ message: data.message }),
+        UI.alert(data.message, "danger"),
       );
 
       return;

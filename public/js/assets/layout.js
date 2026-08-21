@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   // Caminhos ajustados para a raiz pública e nomes em camelCase
-  await loadComponent("#sidebar-container", "./components/sideBar.html");
-  await loadComponent("#navbar-container", "./components/navBar.html");
+  await loadComponent("#sidebar-container", "/components/sideBar.html");
+  await loadComponent("#navbar-container", "/components/navBar.html");
 
   highlightActiveMenu();
   setupMobileToggle();
