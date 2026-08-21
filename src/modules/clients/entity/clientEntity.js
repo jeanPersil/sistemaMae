@@ -6,6 +6,9 @@ export class ClientEntity {
     email,
     neighborhood,
     fk_city,
+    state_id,
+    city_name,
+    state_name,
     howDidYouHear,
     birthday,
     notes,
@@ -22,6 +25,9 @@ export class ClientEntity {
     this.email = email;
     this.neighborhood = neighborhood;
     this.fk_city = fk_city;
+    this.state_id = state_id;
+    this.city_name = city_name;
+    this.state_name = state_name;
     this.howDidYouHear = howDidYouHear;
     this.birthday = birthday ? new Date(birthday) : null;
     this.notes = notes;
@@ -71,6 +77,9 @@ export class ClientEntity {
       email: this.email,
       neighborhood: this.neighborhood,
       fk_city: this.fk_city,
+      state_id: this.state_id,
+      city_name: this.city_name,
+      state_name: this.state_name,
       howDidYouHear: this.howDidYouHear,
       birthday: this.birthday,
       notes: this.notes,

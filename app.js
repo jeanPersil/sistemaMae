@@ -8,6 +8,7 @@ import { pageRouter } from "./src/routes/pages.js";
 
 import userRouter from "./src/modules/user/userRoutes.js";
 import cliRouter from "./src/modules/clients/clientsRoutes.js";
+import locationRouter from "./src/modules/location/locationRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/user", userRouter);
 app.use("/client", cliRouter);
+app.use("/api", locationRouter);
 app.use("/", pageRouter);
 app.use(errorMiddleware);
 

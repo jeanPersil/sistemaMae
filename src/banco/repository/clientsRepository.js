@@ -40,7 +40,20 @@ export class ClientsRepository extends IClientsRepository {
   async findById(id) {
     const { data, error } = await supabase
       .from("clientes")
-      .select("*")
+      .select(
+        `
+        *,
+        cidade:cidade_id (
+          id,
+          nome,
+          estado_id,
+          estado:estado_id (
+            id,
+            nome
+          )
+        )
+      `,
+      )
       .eq("id", id)
       .single();
 
@@ -147,6 +160,9 @@ export class ClientsRepository extends IClientsRepository {
       email: dadosDoBanco.email,
       neighborhood: dadosDoBanco.bairro,
       fk_city: dadosDoBanco.cidade_id,
+      state_id: dadosDoBanco.cidade?.estado_id ?? null,
+      city_name: dadosDoBanco.cidade?.nome ?? null,
+      state_name: dadosDoBanco.cidade?.estado?.nome ?? null,
       howDidYouHear: dadosDoBanco.como_conheceu,
       birthday: dadosDoBanco.aniversario,
       notes: dadosDoBanco.observacoes,
