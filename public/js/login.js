@@ -1,4 +1,4 @@
-import { showError } from "/js/components/alert.js";
+import { showError } from "/assets/alert.js";
 
 const formLogin = document.getElementById("formLogin");
 

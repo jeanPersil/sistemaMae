@@ -1,0 +1,153 @@
+:root {
+  --sidebar-width: 250px;
+  --header-height: 70px;
+  --bg-body: #f8f9fb;
+  --primary-coral: #ff603e;
+  --primary-coral-soft: #fff1ee;
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #edf2f7;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-dark);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* App Wrapper Layout */
+#app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Sidebar */
+#sidebar-container {
+  width: var(--sidebar-width);
+  background-color: #ffffff;
+  border-right: 1px solid var(--border-color);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-brand {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text-dark);
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0.75rem;
+  margin: 0;
+}
+
+.sidebar-heading {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.925rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background-color: #f8fafc;
+  color: var(--primary-coral);
+}
+
+.sidebar-link.active {
+  background-color: var(--primary-coral-soft);
+  color: var(--primary-coral);
+  font-weight: 600;
+}
+
+/* Main Area */
+#main-wrapper {
+  margin-left: var(--sidebar-width);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Top Navbar */
+#navbar-container {
+  height: var(--header-height);
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+/* Content Area */
+.main-content {
+  padding: 2rem;
+}
+
+/* UI Cards */
+.custom-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+}
+
+.btn-coral {
+  background-color: var(--primary-coral);
+  color: #ffffff;
+  border: none;
+  font-weight: 500;
+}
+
+.btn-coral:hover {
+  background-color: #e55333;
+  color: #ffffff;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 991.98px) {
+  #sidebar-container {
+    transform: translateX(-100%);
+  }
+  #sidebar-container.show {
+    transform: translateX(0);
+  }
+  #main-wrapper {
+    margin-left: 0;
+  }
+}
