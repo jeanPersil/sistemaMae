@@ -4,6 +4,11 @@ import {
   renderNewClientModal,
 } from "/js/clients/newClient.js";
 
+import {
+  initEditClientModal,
+  renderEditClientModal,
+} from "/js/clients/editClient.js";
+
 const state = {
   page: 1,
   limit: 10,
@@ -27,7 +32,9 @@ window.changePage = (newPage) => {
 };
 
 window.handleEdit = (id) => {
-  console.log("Editar cliente ID:", id);
+  if (typeof window.openEditClientModal === "function") {
+    window.openEditClientModal(id);
+  }
 };
 
 window.handleDelete = async (id) => {
@@ -48,8 +55,15 @@ window.handleDelete = async (id) => {
 };
 
 function setupModal() {
+  // Inicialização do Modal de Criação
   document.body.insertAdjacentHTML("beforeend", renderNewClientModal());
   initNewClientModal(() => {
+    fetchClients();
+  });
+
+  // Inicialização do Modal de Edição
+  document.body.insertAdjacentHTML("beforeend", renderEditClientModal());
+  initEditClientModal(() => {
     fetchClients();
   });
 }
@@ -106,11 +120,6 @@ function renderTable(clients) {
           <td class="fw-semibold">${client.nome || client.name || "-"}</td>
           <td class="text-muted">${client.telefone || client.phone || "-"}</td>
           <td class="text-muted">${client.email || "-"}</td>
-          <td>
-            <span class="badge ${statusBadge} rounded-pill px-2">
-              ${client.status || "Ativo"}
-            </span>
-          </td>
           <td class="text-end">
             <button class="btn btn-sm btn-light border me-1" title="Editar" onclick="handleEdit(${client.id})">
               <i class="bi bi-pencil"></i>
@@ -132,7 +141,6 @@ function renderTable(clients) {
             <th>Nome</th>
             <th>Telefone</th>
             <th>E-mail</th>
-            <th>Status</th>
             <th class="text-end">Ações</th>
           </tr>
         </thead>
