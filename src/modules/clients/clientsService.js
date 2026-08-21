@@ -20,8 +20,8 @@ export class ClientService {
     return client.dadosPublicos();
   }
 
-  async getAllClients({ page, limit }) {
-    const { clients, meta } = await clientsRep.findAll({ page, limit });
+  async getAllClients({ page, limit, search }) {
+    const { clients, meta } = await clientsRep.findAll({ page, limit, search });
 
     const dataClients = clients.map((item) => {
       const client = new ClientEntity(item);

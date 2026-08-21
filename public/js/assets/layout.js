@@ -5,7 +5,41 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   highlightActiveMenu();
   setupMobileToggle();
+  populateUserData();
 });
+
+function populateUserData() {
+  const userJson = localStorage.getItem("user");
+  if (!userJson) return;
+
+  try {
+    const user = JSON.parse(userJson);
+
+    const userNameEl = document.getElementById("sidebar-user-name");
+    const userRoleEl = document.getElementById("sidebar-user-role");
+    const userAvatarEl = document.getElementById("sidebar-user-avatar");
+
+    if (userNameEl && user.name) {
+      userNameEl.textContent = user.name;
+    }
+
+    if (userRoleEl && user.role) {
+      userRoleEl.textContent = user.role;
+    }
+
+    if (userAvatarEl && user.name) {
+      const initials = user.name
+        .split(" ")
+        .map((n) => n[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase();
+      userAvatarEl.textContent = initials;
+    }
+  } catch (e) {
+    console.error("Erro ao carregar dados do usuário:", e);
+  }
+}
 
 async function loadComponent(selector, fileUrl) {
   try {

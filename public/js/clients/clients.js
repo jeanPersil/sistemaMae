@@ -14,7 +14,7 @@ const state = {
   limit: 10,
   search: "",
   status: "",
-  totalPages: 1,
+  totalPages: 2,
   totalItems: 0,
 };
 
@@ -76,7 +76,6 @@ async function fetchClients() {
       page: state.page,
       limit: state.limit,
       ...(state.search && { search: state.search }),
-      ...(state.status && { status: state.status }),
     });
 
     const response = await fetch(`/client/?${params.toString()}`, {
@@ -92,8 +91,8 @@ async function fetchClients() {
     }
 
     const result = await response.json();
-    state.totalItems = result.total || 0;
-    state.totalPages = result.totalPages || 1;
+    state.totalItems = result.meta.totalItems || 0;
+    state.totalPages = result.meta.totalPages || 1;
 
     if (!result.data || result.data.length === 0) {
       container.innerHTML = UI.empty("Nenhum cliente cadastrado no momento.");

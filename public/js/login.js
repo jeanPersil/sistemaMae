@@ -38,6 +38,16 @@ formLogin.addEventListener("submit", async (event) => {
       return;
     }
 
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        id: data.id,
+        name: data.nome,
+        email: data.email,
+        role: data.role,
+      }),
+    );
+
     window.location.replace("/cliente");
   } catch (error) {
     formLogin.insertAdjacentHTML(

@@ -9,12 +9,32 @@
     <button class="btn btn-light rounded-circle p-2">
       <i class="bi bi-bell"></i>
     </button>
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+    <span
+      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+      >2</span
+    >
   </div>
-  <div class="d-flex align-items-center gap-2 border-start ps-3">
-    <img src="https://ui-avatars.com/api/?name=Admin+User&background=ff603e&color=fff" class="rounded-circle" width="36" height="36" alt="Avatar">
-    <div class="d-none d-md-block text-start">
-      <div class="fw-bold small">Administrador</div>
+  <div
+    class="sidebar-footer border-top p-3 mt-auto d-flex align-items-center gap-2"
+  >
+    <div
+      class="rounded-circle bg-danger-subtle text-danger fw-bold d-flex align-items-center justify-content-center"
+      style="width: 38px; height: 38px"
+      id="sidebar-user-avatar"
+    >
+      U
+    </div>
+    <div class="overflow-hidden">
+      <div class="fw-semibold text-truncate small" id="sidebar-user-name">
+        Carregando...
+      </div>
+      <div
+        class="text-muted text-truncate"
+        style="font-size: 0.75rem"
+        id="sidebar-user-role"
+      >
+        Usuário
+      </div>
     </div>
   </div>
 </div>

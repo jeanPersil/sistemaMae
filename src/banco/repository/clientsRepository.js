@@ -77,13 +77,20 @@ export class ClientsRepository extends IClientsRepository {
     return dadosMapeados;
   }
 
-  async findAll({ page = 1, limit = 10 }) {
+  async findAll({ page = 1, limit = 10, search = "" }) {
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 
-    const { data, error, count } = await supabase
-      .from("clientes")
-      .select("*", { count: "exact" })
+    let query = supabase.from("clientes").select("*", { count: "exact" });
+
+    if (search) {
+      const searchPattern = `%${search}%`;
+      query = query.or(
+        `nome.ilike.${searchPattern},email.ilike.${searchPattern},telefone.ilike.${searchPattern}`,
+      );
+    }
+
+    const { data, error, count } = await query
       .range(from, to)
       .order("criado_em", { ascending: false });
 

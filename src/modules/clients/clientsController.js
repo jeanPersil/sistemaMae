@@ -17,10 +17,15 @@ export class ClientController {
     try {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
+      const search =
+        typeof req.query.search === "string" ? req.query.search.trim() : "";
 
-      const data = await clientService.getAllClients({ page, limit });
-      return res.status(201).json(data);
-    } catch (error) {}
+      const data = await clientService.getAllClients({ page, limit, search });
+      return res.status(200).json(data);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ erro: error.message });
+    }
   };
 
   findById = async (req, res) => {
